@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#ff6b35">
+  <title>Tasty Blast</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- HOME -->
+  <section id="homeScreen" class="screen active">
+    <div class="home-top">
+      <div class="brand">
+        <span class="brand-icon">🍕</span>
+        <div>
+          <h1>Tasty Blast</h1>
+          <p>عالم الطعم والمتعة</p>
+        </div>
+      </div>
+      <button class="circle-btn" onclick="openSettings()">⚙️</button>
+    </div>
+
+    <div class="player-card">
+      <div class="avatar">😋</div>
+      <div class="player-info">
+        <b>لاعب Tasty</b>
+        <span>استمتع بالمغامرة!</span>
+      </div>
+      <div class="coins">🪙 <b id="homeCoins">100</b></div>
+    </div>
+
+    <div class="home-map-preview">
+      <div class="cloud c1">☁️</div>
+      <div class="cloud c2">☁️</div>
+      <div class="map-title">🍰 رحلة المذاق</div>
+
+      <div class="preview-path"></div>
+
+      <button class="preview-level" onclick="openMap()">▶</button>
+
+      <div class="preview-food f1">🍓</div>
+      <div class="preview-food f2">🍩</div>
+      <div class="preview-food f3">🍔</div>
+      <div class="preview-food f4">🍦</div>
+    </div>
+
+    <button class="big-play" onclick="openMap()">
+      خريطة المراحل <span>➜</span>
+    </button>
+
+    <div class="home-buttons">
+      <button onclick="openShop()">🛒<span>المتجر</span></button>
+      <button onclick="openRewards()">🎁<span>المكافآت</span></button>
+      <button onclick="openPremium()">💎<span>Premium</span></button>
+    </div>
+  </section>
+
+
+  <!-- MAP -->
+  <section id="mapScreen" class="screen">
+    <header class="page-header">
+      <button class="back-btn" onclick="showScreen('homeScreen')">←</button>
+      <div>
+        <h2>رحلة المذاق</h2>
+        <small>أكمل طريقك نحو القمة</small>
+      </div>
+      <div class="header-coins">🪙 <span id="mapCoins">100</span></div>
+    </header>
+
+    <div id="map" class="map"></div>
+  </section>
+
+
+  <!-- GAME -->
+  <section id="gameScreen" class="screen">
+    <header class="game-header">
+      <button class="back-btn" onclick="quitLevel()">←</button>
+
+      <div class="level-name">
+        <small>المرحلة</small>
+        <b id="gameLevel">1</b>
+      </div>
+
+      <button class="circle-btn small" onclick="restartCurrentLevel()">↻</button>
+    </header>
+
+    <div class="mission">
+      <div class="mission-item">
+        <span>🎯</span>
+        <small>الهدف</small>
+        <b id="gameTarget">1000</b>
+      </div>
+
+      <div class="mission-item">
+        <span>👣</span>
+        <small>الحركات</small>
+        <b id="gameMoves">30</b>
+      </div>
+
+      <div class="mission-item">
+        <span>⭐</span>
+        <small>النقاط</small>
+        <b id="gameScore">0</b>
+      </div>
+    </div>
+
+    <div class="game-message" id="gameMessage">
+      طابق 3 مأكولات أو أكثر!
+    </div>
+
+    <div class="board-container">
+      <div id="board" class="board"></div>
+    </div>
+
+    <div class="boosters">
+      <button onclick="useBooster('hammer')">
+        <span>🔨</span>
+        <small id="hammerCount">2</small>
+      </button>
+      <button onclick="useBooster('shuffle')">
+        <span>🔀</span>
+        <small id="shuffleCount">2</small>
+      </button>
+      <button onclick="useBooster('extra')">
+        <span>➕</span>
+        <small id="extraCount">1</small>
+      </button>
+    </div>
+  </section>
+
+
+  <!-- SHOP -->
+  <section id="shopScreen" class="screen">
+    <header class="page-header">
+      <button class="back-btn" onclick="showScreen('homeScreen')">←</button>
+      <h2>🛒 المتجر</h2>
+      <div class="header-coins">🪙 <span id="shopCoins">100</span></div>
+    </header>
+
+    <div class="shop-list">
+
+      <div class="shop-card">
+        <div class="shop-icon">🔨</div>
+        <div>
+          <b>المطرقة</b>
+          <p>إزالة قطعة واحدة</p>
+        </div>
+        <button onclick="buyItem('hammer',25)">25 🪙</button>
+      </div>
+
+      <div class="shop-card">
+        <div class="shop-icon">🔀</div>
+        <div>
+          <b>خلط الطعام</b>
+          <p>إعادة ترتيب اللوحة</p>
+        </div>
+        <button onclick="buyItem('shuffle',35)">35 🪙</button>
+      </div>
+
+      <div class="shop-card">
+        <div class="shop-icon">➕</div>
+        <div>
+          <b>حركة إضافية</b>
+          <p>احصل على حركة إضافية</p>
+        </div>
+        <button onclick="buyItem('extra',50)">50 🪙</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- REWARDS -->
+  <section id="rewardsScreen" class="screen">
+    <header class="page-header">
+      <button class="back-btn" onclick="showScreen('homeScreen')">←</button>
+      <h2>🎁 المكافآت</h2>
+    </header>
+
+    <div class="reward-card">
+      <div class="reward-big">🎁</div>
+      <h2>المكافأة اليومية</h2>
+      <p id="rewardText">احصل على 50 عملة اليوم!</p>
+      <button class="big-play" id="claimReward" onclick="claimDailyReward()">
+        احصل عليها
+      </button>
+    </div>
+
+    <div class="streak">
+      <div>اليوم 1<br><b>🪙 50</b></div>
+      <div>اليوم 2<br><b>❤️</b></div>
+      <div>اليوم 3<br><b>🔨</b></div>
+      <div>اليوم 4<br><b>🪙 100</b></div>
+      <div>اليوم 5<br><b>💎</b></div>
+    </div>
+  </section>
+
+
+  <!-- PREMIUM -->
+  <section id="premiumScreen" class="screen">
+    <header class="page-header">
+      <button class="back-btn" onclick="showScreen('homeScreen')">←</button>
+      <h2>💎 Tasty Premium</h2>
+    </header>
+
+    <div class="premium-card">
+      <div class="premium-logo">💎</div>
+      <h1>Tasty Premium</h1>
+      <div class="price">80 <small>جنيه مصري / شهر</small></div>
+
+      <ul>
+        <li>✓ إزالة الإعلانات</li>
+        <li>✓ مكافآت إضافية</li>
+        <li>✓ أدوات مجانية يوميًا</li>
+        <li>✓ تجربة لعب مميزة</li>
+      </ul>
+
+      <button class="premium-btn" onclick="subscribePremium()">
+        الاشتراك
+      </button>
+
+      <small class="premium-note">
+        نظام الاشتراك مهيأ للربط بمتجر التطبيقات.
+      </small>
+    </div>
+  </section>
+
+
+  <!-- SETTINGS -->
+  <section id="settingsScreen" class="screen">
+    <header class="page-header">
+      <button class="back-btn" onclick="showScreen('homeScreen')">←</button>
+      <h2>⚙️ الإعدادات</h2>
+    </header>
+
+    <div class="settings-list">
+      <button onclick="toggleSound()">
+        🔊 الصوت
+        <span id="soundStatus">تشغيل</span>
+      </button>
+
+      <button onclick="toggleMusic()">
+        🎵 الموسيقى
+        <span id="musicStatus">تشغيل</span>
+      </button>
+
+      <button onclick="resetProgress()">
+        🗑️ إعادة ضبط التقدم
+        <span>↻</span>
+      </button>
+    </div>
+  </section>
+
+
+  <!-- AD PLACEHOLDER -->
+  <div id="adContainer" class="ad-container">
+    <span>إعلان</span>
+    <div>مساحة الإعلان</div>
+  </div>
+
+
+  <!-- RESULT -->
+  <div id="resultOverlay" class="overlay hidden">
+    <div class="result-card">
+
+      <div id="resultIcon" class="result-icon">🏆</div>
+      <h1 id="resultTitle">ممتاز!</h1>
+      <p id="resultDescription">لقد أكملت المرحلة.</p>
+
+      <div class="stars" id="resultStars">⭐⭐⭐</div>
+
+      <div class="result-score">
+        <small>النقاط</small>
+        <b id="resultScore">0</b>
+      </div>
+
+      <button class="big-play" onclick="nextLevel()">
+        المرحلة التالية ➜
+      </button>
+
+      <button class="secondary-btn" onclick="quitLevel()">
+        خريطة المراحل
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
